@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'din';
+    src: url('/fonts/Futurot.ttf'); /* Указание пути к шрифту */
+    /* Дополнительные свойства шрифта, такие как формат и начертание, могут быть указаны здесь */
+    font-size: 10px;
+    font-weight: normal; /* Указание веса шрифта (normal, bold и так далее) */
+    font-style: normal; /* Указание начертания шрифта (normal, italic и так далее) */
+    font-display: swap; /* Используем swap для быстрого отображения текста */
+}
+
+/*для серверов*/
+.font_l4d4 {
+    font-family: 'din', -apple-system, system;
+    font-size: 110%;
+}
+
+body {
+    min-height: calc(100% - 200px);
+    background-image: url('/images/header.jpg'), url('/images/footer.jpg');
+    background-size: 3000px auto, 2500px auto;
+    background-position: center top, center bottom;
+    background-repeat: no-repeat, no-repeat;
+    background-color: #19232c;
+}
