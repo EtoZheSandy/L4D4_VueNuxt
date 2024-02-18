@@ -198,19 +198,21 @@ export default {
 
             <!-- Полоса прогресса для игроков -->
             <div class="relative pt-1">
-              <div
-                  :style="'width:' + Math.max((server.players.length / server.maxplayers) * 100, 15) + '%'"
+              <!-- Задний фон для полосы-->
+              <div class="bg-gray-300 h-7 flex inset-0 text-center whitespace-nowrap text-white rounded overflow-hidden">
+                <div
+                  :style="'width:' + Math.max((server.players.length / server.maxplayers) * 100, 0) + '%'"
                   :class="{
-              'bg-green-400': server.players.length <= 3,
-              'bg-yellow-400': server.players.length > 3 && server.players.length <= 6,
-              'bg-red-400': server.players.length > 6
-            }"
-                  class="h-7 flex flex-col text-center whitespace-nowrap text-white justify-center relative rounded"
-              >
+                    'bg-green-400': server.players.length <= 4,
+                    'bg-yellow-400': server.players.length > 4 && server.players.length <= 6,
+                    'bg-red-400': server.players.length > 6
+                  }"
+                  class="h-7 flex flex-col text-center whitespace-nowrap text-white justify-center relative">
+                </div>
                 <!-- Текст с количеством игроков -->
                 <span class="absolute inset-0 flex items-center justify-center text-lg text-black font-bold">
-              {{ server.players.length }}/{{ server.maxplayers }}
-            </span>
+                    {{ server.players.length }}/{{ server.maxplayers }}
+                </span>
               </div>
             </div>
 
