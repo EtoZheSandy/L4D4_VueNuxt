@@ -99,7 +99,7 @@ export default {
 
           // Инициализация serverStates
           filteredData.forEach((server) => {
-            this.serverStates.set(String(server.serverId), false);
+            if(!this.serverStates.has(String(server.serverId))) this.serverStates.set(String(server.serverId), false);
           });
 
           // Сохранение данных
@@ -135,7 +135,7 @@ export default {
     this.fetchData();
     this.autoRefreshInterval = setInterval(() => {
       this.fetchData();
-    }, 30000); // Обновление 30 секунд (60000 миллисекунд)
+    }, 30000); // Обновление 30 секунд (30000 миллисекунд)
   },
   beforeDestroy() {
     clearInterval(this.autoRefreshInterval); // Очистка интервала при уничтожении компонента
