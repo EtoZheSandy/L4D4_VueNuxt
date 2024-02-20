@@ -47,9 +47,21 @@ export default {
 
     </div>
     <div class="items-start">
-      <p class="text-lg px-2 mb-2 md:mb-0">Игроков: <span class="text-gray-500 font-bold">⬤ {{ members }}</span></p>
-      <p class="text-lg px-2 mb-2 md:mb-0">Онлайн: <span class="text-blue-500 font-bold">🔵 {{ online }}</span></p>
-      <p class="text-lg px-2 mb-2 md:mb-0">В игре: <span class="text-green-500 font-bold">🟢 {{ inGame }}</span></p>
+      <p class="text-lg px-2 mb-2 md:mb-0">Игроков: <span class="text-gray-500 font-bold"><span class="dot"></span> {{ members }}</span></p>
+      <p class="text-lg px-2 mb-2 md:mb-0">Онлайн: <span class="text-blue-500 font-bold"><span class="dot"></span> {{ online }}</span></p>
+      <p class="text-lg px-2 mb-2 md:mb-0">В игре: <span class="text-green-500 font-bold"><span class="dot"></span> {{ inGame }}</span></p>
     </div>
   </div>
 </template>
+
+<style>
+.dot {
+  height: 16px;
+  width: 16px;
+  background-color: currentColor;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  bottom: -2px;
+}
+</style>
