@@ -47,9 +47,20 @@ export default {
 
     </div>
   <div class="items-start">
-    <p class="text-lg px-2 mb-2 md:mb-0">Игроков: <span class="text-gray-500 font-bold">⬤ {{ members }}</span></p>
-    <p class="text-lg px-2 mb-2 md:mb-0">Онлайн: <span class="text-blue-500 font-bold">🔵 {{ online }}</span></p>
-    <p class="text-lg px-2 mb-2 md:mb-0">В игре: <span class="text-green-500 font-bold">🟢 {{ inGame }}</span></p>
+    <table class="text-lg m-2"><tbody>
+      <tr>
+        <td style="width: 72px;">Всего:</td>
+        <td><span class="text-gray-500 font-bold"><span class="dot"></span> {{ members }}</span></td>
+      </tr>
+      <tr>
+        <td>Онлайн:</td>
+        <td><span class="text-blue-500 font-bold"><span class="dot"></span> {{ online }}</span></td>
+      </tr>
+      <tr>
+        <td>В игре:</td>
+        <td><span class="text-green-500 font-bold"><span class="dot"></span> {{ inGame }}</span></td>
+      </tr>
+    </tbody></table>
   </div>
   </div>
     <!-- Смайлик-ссылка, которая открывает Steam Community в новой вкладке -->
@@ -63,3 +74,15 @@ export default {
      🦀  Вставляем смайлик прямо здесь -->
 
 </template>
+
+<style>
+.dot {
+  height: 18px;
+  width: 18px;
+  background-color: currentColor;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  bottom: -2px;
+}
+</style>

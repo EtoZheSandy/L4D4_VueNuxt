@@ -99,7 +99,7 @@ export default {
 
           // Инициализация serverStates
           filteredData.forEach((server) => {
-            this.serverStates.set(String(server.serverId), false);
+            if(!this.serverStates.has(String(server.serverId))) this.serverStates.set(String(server.serverId), false);
           });
 
           // Сохранение данных
@@ -135,7 +135,7 @@ export default {
     this.fetchData();
     this.autoRefreshInterval = setInterval(() => {
       this.fetchData();
-    }, 30000); // Обновление 30 секунд (60000 миллисекунд)
+    }, 30000); // Обновление 30 секунд (30000 миллисекунд)
   },
   beforeDestroy() {
     clearInterval(this.autoRefreshInterval); // Очистка интервала при уничтожении компонента
@@ -199,20 +199,21 @@ export default {
             <!-- Полоса прогресса для игроков -->
             <div class="relative pt-1">
               <!-- Задний фон для полосы-->
-              <div class="bg-slate-300 h-7 flex inset-1 text-center whitespace-nowrap text-white justify-center rounded absolute"></div>
-              <div
-                :style="'width:' + Math.max((server.players.length / server.maxplayers) * 100, 15) + '%'"
-                :class="{
-                  'bg-green-400': server.players.length <= 3,
-                  'bg-yellow-400': server.players.length > 3 && server.players.length <= 6,
-                  'bg-red-400': server.players.length > 6
-                }"
-                class="h-7 flex flex-col text-center whitespace-nowrap text-white justify-center relative rounded">
+              <div class="bg-gray-300 h-7 flex inset-0 text-center whitespace-nowrap text-white rounded overflow-hidden">
+                <div
+                  :style="'width:' + Math.max((server.players.length / server.maxplayers) * 100, 0) + '%'"
+                  :class="{
+                    'bg-green-400': server.players.length <= 4,
+                    'bg-yellow-400': server.players.length > 4 && server.players.length <= 6,
+                    'bg-red-400': server.players.length > 6
+                  }"
+                  class="h-7 flex flex-col text-center whitespace-nowrap text-white justify-center relative">
+                </div>
+                <!-- Текст с количеством игроков -->
+                <span class="absolute inset-0 flex items-center justify-center text-lg text-black font-bold">
+                    {{ server.players.length }}/{{ server.maxplayers }}
+                </span>
               </div>
-              <!-- Текст с количеством игроков -->
-              <span class="absolute inset-0 flex items-center justify-center text-lg text-black font-bold">
-                  {{ server.players.length }}/{{ server.maxplayers }}
-              </span>
             </div>
 
             <!-- Кнопка "Показать игроков" -->
