@@ -56,8 +56,8 @@ export default {
 
 <style>
 .dot {
-  height: 18px;
-  width: 18px;
+  height: 16px;
+  width: 16px;
   background-color: currentColor;
   border-radius: 50%;
   display: inline-block;
