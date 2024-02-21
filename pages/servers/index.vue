@@ -156,7 +156,7 @@ export default {
       <!-- По серверная загруженность -->
       <div v-for="(server, index) in serverData" :key="index">
         <!-- Контейнер для изображения и текста -->
-        <div>
+        <div class="relative">
           <!-- Картинка карты -->
           <div class="w-full object-cover h-24 overflow-hidden relative rounded-xl cursor-default shadow-md" id="server-container">
             <img
@@ -184,7 +184,9 @@ export default {
                     'bg-red-400': server.players.length > 6
                   }"></div> 
                 </div>
+                <!-- Количество игроков-->
                 <div>{{server.players.length}}/{{server.maxplayers}}</div>
+                <!-- Карта -->
                 <div class="select-text">{{ server.map }}</div>
               </div>
               <!-- Кнопки -->
