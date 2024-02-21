@@ -150,20 +150,20 @@ export default {
 <template>
   <div>
     <!-- Grid с серверной загруженностью -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5
-                gap-4 py-16 px-8 my-4 mx-10 rounded-2xl backdrop-blur-md select-none"
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5
+                gap-4 py-8 sm:py-8 md:py-16 px-2 sm:px-2 md:px-8 my-0 sm:my-0 md:my-4 mx-0 sm:mx-0 md:mx-10 rounded-2xl backdrop-blur-md select-none"
       id="grid-container">
       <!-- По серверная загруженность -->
       <div v-for="(server, index) in serverData" :key="index">
         <!-- Контейнер сервера -->
         <div class="relative bg-black bg-opacity-50 rounded-xl overflow-hidden">
           <!-- Картинка карты -->
-          <div class="w-full object-cover h-24 overflow-hidden relative rounded-t-xl cursor-default shadow-md" id="server-container">
+          <div class="w-full object-cover h-32 sm:h-32 md:h-24 overflow-hidden relative rounded-t-xl cursor-default shadow-md" id="server-container">
             <img
                 :src="getServerMapImage(server.map)"
                 alt="Карта"
                 @error="handleImageError(server)"
-                class="object-cover overflow-hidden w-full h-24 brightness-50 duration-200" id="server-image"
+                class="object-cover overflow-hidden w-full h-full brightness-75 md:brightness-50 duration-200" id="server-image"
             />
             <!-- Контент картинки -->
             <div class="m-3">
@@ -190,11 +190,11 @@ export default {
                 <div class="select-text">{{ server.map }}</div>
               </div>
               <!-- Кнопки -->
-              <div class="absolute bottom-0 right-0 text-white h-24 w-12 flex flex-col justify-around">
+              <div class="absolute bottom-0 right-0 text-white w-12 h-full flex flex-col justify-around">
                 <!-- Copy -->
                 <a
                   @click="copyToClipboard(server.connect)"
-                  class="hover:bg-white hover:bg-opacity-20 h-12 p-3 rounded-bl-xl duration-100 active:bg-opacity-40 btn-with-icon">
+                  class="hover:bg-white hover:bg-opacity-20 h-[50%] p-3 rounded-bl-xl duration-100 active:bg-opacity-40 btn-with-icon flex">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                     <path class="icon-in-btn" fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
                     <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
@@ -203,7 +203,7 @@ export default {
                 <!-- Play -->
                 <a
                   :href="'steam://connect/' + server.connect" target="_blank"
-                  class="hover:bg-white hover:bg-opacity-20 h-12 p-3 rounded-tl-xl duration-100 active:bg-opacity-40">
+                  class="hover:bg-white hover:bg-opacity-20 h-[50%] p-3 rounded-tl-xl duration-100 active:bg-opacity-40 flex">
                   <svg xmlns="http://www.w3.org/2000/svg" :class="{'fill-white':server.players.length!=server.maxplayers,'fill-gray-500':server.players.length==server.maxplayers}" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
                   </svg>
@@ -216,11 +216,11 @@ export default {
             <!-- Таблица игроков -->
             <Transition name="table-show">
               <div class="flex text-white px-2 py-2" v-show="serverStates.get(String(server.serverId))">
-                <table class="text-sm mt-2 w-full">
+                <table class="text-lg sm:text-lg md:text-sm mt-2 w-full">
                   <tbody>
                     <tr v-for="(player, playerIndex) in server.players" :key="playerIndex" class="player-row">
-                      <td>{{ player.name }}</td>
-                      <td v-if="!(player.raw.time === undefined)">{{ formattedTime(player.raw.time) }}</td>
+                      <td>{{!(player.raw.time === undefined) ? player.name : 'Загружается...'  }}</td>
+                      <td>{{!(player.raw.time === undefined) ? formattedTime(player.raw.time) : '0 сек' }}</td>
                   </tr>
                   </tbody>
                 </table>
@@ -228,14 +228,14 @@ export default {
             </Transition>
             <!-- Кнопка для вызова списка игроков -->
             <a @click="togglePlayersList(server.serverId)"
-              class="bg-black bg-opacity-40 bottom-0 flex justify-center hover:bg-gray-700">
+              class="bg-black bg-opacity-40 bottom-0 flex justify-center hover:bg-gray-700 h-8 sm:h-8 md:h-4">
               <svg v-if="!serverStates.get(String(server.serverId))"
-                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
               </svg>
               <svg 
                 v-if="serverStates.get(String(server.serverId))"
-                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-chevron-compact-up" viewBox="0 0 16 16">
+                xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-chevron-compact-up" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894z"/>
               </svg>
             </a>
