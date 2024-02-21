@@ -158,7 +158,7 @@ export default {
         <!-- Контейнер сервера -->
         <div class="relative bg-black bg-opacity-50 rounded-xl overflow-hidden">
           <!-- Картинка карты -->
-          <div class="w-full object-cover h-24 overflow-hidden relative rounded-xl cursor-default shadow-md" id="server-container">
+          <div class="w-full object-cover h-24 overflow-hidden relative rounded-t-xl cursor-default shadow-md" id="server-container">
             <img
                 :src="getServerMapImage(server.map)"
                 alt="Карта"
