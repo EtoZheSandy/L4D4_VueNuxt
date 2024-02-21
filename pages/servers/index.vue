@@ -151,12 +151,12 @@ export default {
   <div>
     <!-- Grid с серверной загруженностью -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5
-                gap-4 py-16 px-8 my-8 mx-10 rounded-2xl backdrop-blur-md select-none"
+                gap-4 py-16 px-8 my-4 mx-10 rounded-2xl backdrop-blur-md select-none"
       id="grid-container">
       <!-- По серверная загруженность -->
       <div v-for="(server, index) in serverData" :key="index">
-        <!-- Контейнер для изображения и текста -->
-        <div class="relative">
+        <!-- Контейнер сервера -->
+        <div class="relative bg-black bg-opacity-50 rounded-xl overflow-hidden">
           <!-- Картинка карты -->
           <div class="w-full object-cover h-24 overflow-hidden relative rounded-xl cursor-default shadow-md" id="server-container">
             <img
@@ -211,6 +211,35 @@ export default {
               </div>
             </div>
           </div>
+          <!-- Список игроков -->
+          <div v-if="server.players.length != 0">
+            <!-- Таблица игроков -->
+            <Transition name="table-show">
+              <div class="flex text-white px-2 py-2" v-show="serverStates.get(String(server.serverId))">
+                <table class="text-sm mt-2 w-full">
+                  <tbody>
+                    <tr v-for="(player, playerIndex) in server.players" :key="playerIndex" class="player-row">
+                      <td>{{ player.name }}</td>
+                      <td v-if="!(player.raw.time === undefined)">{{ formattedTime(player.raw.time) }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </Transition>
+            <!-- Кнопка для вызова списка игроков -->
+            <a @click="togglePlayersList(server.serverId)"
+              class="bg-black bg-opacity-40 bottom-0 flex justify-center hover:bg-gray-700">
+              <svg v-if="!serverStates.get(String(server.serverId))"
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
+              </svg>
+              <svg 
+                v-if="serverStates.get(String(server.serverId))"
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-chevron-compact-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894z"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -221,6 +250,17 @@ export default {
 
 
 <style>
+.table-show-enter-active,
+.table-show-leave-active {
+  transition: all 0.2s;
+  max-height: 1000px;
+}
+.table-show-enter-from,
+.table-show-leave-to{
+  opacity: 0;
+  max-height: 0px;
+}
+
 .font_server {
   font-family: 'din';
 }
