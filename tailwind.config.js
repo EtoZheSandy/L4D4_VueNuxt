@@ -10,6 +10,9 @@ export default {
   plugins: [
     require('flowbite')
   ],
+  future: {
+    hoverOnlyWhenSupported: true
+  }
   // plugins: [require('daisyui')],
 }
 
