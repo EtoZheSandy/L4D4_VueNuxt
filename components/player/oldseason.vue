@@ -1,11 +1,11 @@
 <script>
-const config = useRuntimeConfig()
 export default {
   props: {
     steamid: String // Ожидаем steamid как prop
   },
   data() {
     return {
+      config : useRuntimeConfig(),
       seasonData: [],
       error: null,
     };
@@ -23,7 +23,7 @@ export default {
   methods: {
     async fetchPlayerSeason() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/oldseason/${this.steamid}`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/oldseason/${this.steamid}`);
         if (response.ok) {
           const data = await response.json();
 

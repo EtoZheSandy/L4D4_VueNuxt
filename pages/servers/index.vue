@@ -1,5 +1,5 @@
 <script>
-const config = useRuntimeConfig()
+//const config = useRuntimeConfig()
 import { findChapterById } from '~/components/funHelper/CampaignHelper.js';
 export default {
   setup() {
@@ -13,6 +13,7 @@ export default {
   },
   data() {
     return {
+      config : useRuntimeConfig(),
       showPlayersList: false, // Начальное состояние для отображения/скрытия списка
       serverData: null, // Здесь будут храниться данные сервера после запроса
       serverStates: new Map(),
@@ -83,7 +84,7 @@ export default {
     },
     async fetchData() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/server/0`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/server/0`);
         if (response.ok) {
           const data = await response.json();
 
@@ -134,7 +135,7 @@ export default {
       return nameArray
     },
   },
-  created() {
+  mounted() {
     this.fetchData();
     this.autoRefreshInterval = setInterval(() => {
       this.fetchData();

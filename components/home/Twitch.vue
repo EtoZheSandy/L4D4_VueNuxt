@@ -1,16 +1,15 @@
 <script>
-const config = useRuntimeConfig()
-
 export default {
   data() {
     return {
+      config : useRuntimeConfig(),
       Streamers: [], // Инициализируйте его значением null или другим подходящим значением по умолчанию
     };
   },
   methods: {
     async GetTwitch() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/streams/left4dead2`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/streams/left4dead2`);
         if (response.ok) {
           // const data = await response.json();
           this.Streamers = await response.json();
@@ -32,7 +31,7 @@ export default {
       this.autoUpdateInterval = setInterval(this.GetTwitch, 30000);
     },
   },
-  created() {
+  mounted() {
     this.startAutoUpdate(); // Начинаем автообновление данных при создании компонента
   },
   beforeDestroy() {
