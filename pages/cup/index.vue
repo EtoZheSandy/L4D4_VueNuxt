@@ -1,5 +1,4 @@
 <script>
-const config = useRuntimeConfig()
 export default {
   setup () {
     useSeoMeta({
@@ -11,6 +10,7 @@ export default {
   },
   data() {
     return {
+      config : useRuntimeConfig(),
       CupCommand: [],
       cuptimig: [],
       discrodbet: [],
@@ -19,7 +19,7 @@ export default {
   methods: {
     async CupCommandsGet() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/cupcomand`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/cupcomand`);
         if (response.ok) {
           this.CupCommand = await response.json();
           this.CupCommand.sort((a, b) => b.score - a.score);
@@ -32,7 +32,7 @@ export default {
     },
     async cuptimigGet() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/cuptimig`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/cuptimig`);
         if (response.ok) {
           const cuptimigData = await response.json();
 
@@ -55,7 +55,7 @@ export default {
     },
     async discrodbetGet() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/discrodbet`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/discrodbet`);
         if (response.ok) {
           this.discrodbet = await response.json();
           this.discrodbet.sort((a, b) => b.TotalCoins - a.TotalCoins);
@@ -79,7 +79,7 @@ export default {
       return dateTime.toLocaleString(undefined, options);
     },
   },
-  created() {
+  mounted() {
     this.CupCommandsGet();
     this.cuptimigGet();
     this.discrodbetGet();

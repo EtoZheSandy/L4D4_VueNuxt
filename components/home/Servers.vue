@@ -1,17 +1,16 @@
 <script>
 import { findChapterById } from '~/components/funHelper/CampaignHelper.js';
-const config = useRuntimeConfig()
-
 export default {
   data() {
     return {
+      config : useRuntimeConfig(),
       serverData: null, // Здесь будут храниться данные сервера после запроса
     };
   },
   methods: {
     async getServersData() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/server/0`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/server/0`);
         if (response.ok) {
           const data = await response.json();
 
@@ -60,7 +59,7 @@ export default {
       }
     },
   },
-  created() {
+  mounted() {
     this.getServersData();
     this.startAutoUpdate(); // Вызываем метод для автообновления
   },

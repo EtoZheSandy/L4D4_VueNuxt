@@ -14,11 +14,10 @@
 </template>
 
 <script>
-const config = useRuntimeConfig()
-
 export default {
   data() {
     return {
+      config : useRuntimeConfig(),
       Annonce: [],
       hiddenMessages: [],
     };
@@ -26,7 +25,7 @@ export default {
   methods: {
     async getAnnonce() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/annonce`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/annonce`);
         if (response.ok) {
           const data = await response.json();
           this.Annonce = data.filter(message => message.View === 1);

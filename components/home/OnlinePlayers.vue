@@ -1,8 +1,8 @@
 <script>
-const config = useRuntimeConfig()
 export default {
   data() {
     return {
+      config : useRuntimeConfig(),
       members: 0,
       inGame: 0,
       online: 0,
@@ -11,7 +11,7 @@ export default {
   methods: {
     async getSteamGroup() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/steam_group`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/steam_group`);
         if (response.ok) {
           const data = await response.json();
           this.members = data.members;

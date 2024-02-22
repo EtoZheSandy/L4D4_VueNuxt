@@ -1,15 +1,15 @@
 <script>
-const config = useRuntimeConfig()
 export default {
   data() {
     return {
+      config : useRuntimeConfig(),
       OnlineDay: 0, // Инициализируйте его значением null или другим подходящим значением по умолчанию
     };
   },
   methods: {
     async getOnlineDay() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/online_day`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/online_day`);
         if (response.ok) {
           this.OnlineDay = await response.json();
         } else {

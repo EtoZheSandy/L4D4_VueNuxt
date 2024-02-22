@@ -1,15 +1,15 @@
 <script>
-const config = useRuntimeConfig()
 export default {
   data() {
     return {
+      config : useRuntimeConfig(),
       Allplayers: 0, // Инициализируйте его значением null или другим подходящим значением по умолчанию
     };
   },
   methods: {
     async getOnlineDay() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/allplayers`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/allplayers`);
         if (response.ok) {
           const data = await response.json();
           this.Allplayers = data[0].TotalPlayers;

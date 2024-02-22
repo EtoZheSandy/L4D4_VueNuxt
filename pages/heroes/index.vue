@@ -1,5 +1,4 @@
 <script>
-const config = useRuntimeConfig()
 export default {
   setup () {
     useSeoMeta({
@@ -12,6 +11,7 @@ export default {
   },
   data() {
     return {
+      config: useRuntimeConfig(),
       DonPlayer: [],
       steamData: {}, // Изменил на объект
     };
@@ -19,7 +19,7 @@ export default {
   methods: {
     async GetDonPlayer() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/donate_players`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/donate_players`);
         if (response.ok) {
           this.DonPlayer = await response.json();
           this.DonPlayer.forEach(player => {
@@ -34,7 +34,7 @@ export default {
     },
     async fetchPlayerSteam(steamid) {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/get_steam/${steamid}`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/get_steam/${steamid}`);
         if (response.ok) {
           this.steamData[steamid] = await response.json();
         } else {
