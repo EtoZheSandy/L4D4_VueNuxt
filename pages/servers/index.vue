@@ -171,6 +171,7 @@ export default {
           <!-- Картинка карты -->
           <div class="w-full object-cover h-32 sm:h-32 md:h-24 overflow-hidden relative rounded-t-xl cursor-default shadow-md" id="server-container">
             <img
+                @click="togglePlayersList(server.serverId)"
                 :src="getServerMapImage(server.map)"
                 alt="Карта"
                 @error="handleImageError(server)"
@@ -179,12 +180,12 @@ export default {
             <!-- Контент картинки -->
             <div class="m-3">
               <!-- Название сервера-->
-              <h2 class="text-lg font-semibold font_server absolute top-2 text-white select-text">
+              <h2 class="pointer-events-none text-lg font-semibold font_server absolute top-2 text-white select-text">
                 {{ getServerName(server.name)[0] }} {{ getServerName(server.name)[1] }}
                 <span v-if="isServerOffline(server.timestamp)" class="text-red-500 font_l4d4">Offline</span>
               </h2>
               <!-- Карта и онлайн -->
-              <div class="text-gray-400 absolute bottom-2 font-semibold justify-between flex space-x-2 text-md">
+              <div class="pointer-events-none text-gray-400 absolute bottom-2 font-semibold justify-between flex space-x-2 text-md">
                 <!-- Прогресс игроков-->
                 <div class="bg-gray-500 rounded-sm overflow-hidden w-2 full-height rotate-180">   
                   <div
@@ -239,7 +240,7 @@ export default {
             </Transition>
             <!-- Кнопка для вызова списка игроков -->
             <a @click="togglePlayersList(server.serverId)"
-              class="bg-black bg-opacity-40 bottom-0 flex justify-center hover:bg-gray-700 h-8 sm:h-8 md:h-4">
+              class="bg-black bg-opacity-40 bottom-0 flex justify-center hover:bg-gray-700 h-4">
               <svg v-if="!serverStates.get(String(server.serverId))"
                 xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
