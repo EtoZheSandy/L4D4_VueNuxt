@@ -1,5 +1,4 @@
 <script>
-//const config = useRuntimeConfig()
 import { findChapterById } from '~/components/funHelper/CampaignHelper.js';
 export default {
   setup() {
@@ -84,7 +83,10 @@ export default {
     },
     async fetchData() {
       try {
-        const response = await fetch(`${this.config.public.apiBase}/v1/server/0`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/server/0`, 
+        {
+          cache: 'force-cache'
+        });
         if (response.ok) {
           const data = await response.json();
 
@@ -155,7 +157,15 @@ export default {
                 gap-4 py-8 sm:py-8 md:py-16 px-2 sm:px-2 md:px-8 my-0 sm:my-0 md:my-4 mx-0 sm:mx-0 md:mx-10 rounded-2xl backdrop-blur-md select-none"
       id="grid-container">
       <!-- По серверная загруженность -->
-      <div v-for="(server, index) in serverData" :key="index">
+      <!-- Placeholder -->
+      <div v-if="serverData == null" v-for="index in 14" :key="index">
+        <div class="relative rounded-xl overflow-hidden bg-gray-800 bg-opacity-80">
+          <div class="shimmer w-full object-cover h-32 sm:h-32 md:h-24 overflow-hidden relative rounded-t-xl cursor-default shadow-md">
+          </div>
+        </div>
+      </div>
+      <!-- Original-->
+      <div v-if="serverData != null" v-for="(server, index) in serverData" :key="index">
         <!-- Контейнер сервера -->
         <div class="relative bg-black bg-opacity-50 rounded-xl overflow-hidden">
           <!-- Картинка карты -->
@@ -284,5 +294,22 @@ export default {
   fill-opacity: 0;
   transition-delay: 2000ms;
   transition-duration: 300ms;
+}
+.shimmer{
+    background: linear-gradient(100deg,
+    rgba(255,255,255,0) 20%,
+    rgba(255,255,255,0.5) 50%,
+    rgba(255,255,255,0) 80%);
+ 
+    animation: shimmer 2s infinite linear;
+}
+ 
+@keyframes shimmer{
+    from {
+        transform: translateX(-200%);
+    }
+    to{
+        transform: translateX(200%);
+    }
 }
 </style>
