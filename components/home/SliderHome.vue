@@ -74,7 +74,7 @@ export default {
 
       <p class="prev absolute top-1/2 left-0 transform -translate-y-1/2 w-auto p-2 text-white font-bold text-2xl transition duration-600 ease-in-out bg-black bg-opacity-40 rounded-r-2xl" @click="plusSlides(-1)">
 <!--        <BootstrapIconCaretLeft />-->
-      <
+      
       </p>
       <p class="next absolute top-1/2 right-0 transform -translate-y-1/2 w-auto p-2 text-white font-bold text-2xl transition duration-600 ease-in-out bg-black bg-opacity-40 rounded-l-2xl" @click="plusSlides(1)">
 <!--        <BootstrapIconCaretRight />-->

@@ -10,11 +10,11 @@
 <script>
 export default {
   props: {
-    config : useRuntimeConfig(),
     steamid: String // Ожидаем steamid как prop
   },
   data() {
     return {
+      config : useRuntimeConfig(),
       achievement: [],
       error: null,
     };
