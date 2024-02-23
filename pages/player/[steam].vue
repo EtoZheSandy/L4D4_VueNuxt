@@ -1,5 +1,4 @@
 <script>
-const config = useRuntimeConfig()
 import Oldseason from "~/components/player/oldseason.vue"; // Путь к вашему компоненту
 import Achievement from "~/components/player/achiev.vue";
 export default {
@@ -14,6 +13,7 @@ export default {
   },
   data() {
     return {
+      config: useRuntimeConfig(),
       playerData: [],
       steamData: [],
       seasonData: [],
@@ -41,7 +41,7 @@ export default {
   methods: {
     async fetchPlayerProfile() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/player_info/${this.steamid}`);
+        const response = await fetch(`${this.config.public.apiBase}/api/v1/player_info/${this.steamid}`);
         if (response.ok) {
           this.playerData = await response.json();
         } else {
@@ -53,7 +53,7 @@ export default {
     },
     async fetchPlayerSteam() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/get_steam/${this.steamid}`);
+        const response = await fetch(`${this.config.public.apiBase}/api/v1/get_steam/${this.steamid}`);
         if (response.ok) {
           this.steamData = await response.json();
           // document.title = this.steamData.personaname; // Устанавливаем заголовок страницы
@@ -73,7 +73,7 @@ export default {
     },
     async fetchPlayerAdmin() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/admins_players`);
+        const response = await fetch(`${this.config.public.apiBase}/api/v1/admins_players`);
         if (response.ok) {
           const data = await response.json();
           this.AdminData = data.includes(this.steamid);
@@ -86,7 +86,7 @@ export default {
     },
     async fetchPlayerBan() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/bans/${this.steamid}`);
+        const response = await fetch(`${this.config.public.apiBase}/api/v1/bans/${this.steamid}`);
         if (response.ok) {
           const data = await response.json();
           this.BanData = data[0];
@@ -99,7 +99,7 @@ export default {
     },
     async AllTimeScore() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/alltimescore/${this.steamid}`);
+        const response = await fetch(`${this.config.public.apiBase}/api/v1/alltimescore/${this.steamid}`);
         if (response.ok) {
           const data = await response.json();
           this.AllTimeScoreData = data[0];

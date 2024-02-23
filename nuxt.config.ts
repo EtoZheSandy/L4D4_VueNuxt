@@ -25,20 +25,20 @@ export default({
     //     display: "inline", // or 'component'
     // },
 
-    ssr: false, // раньше работало при true теперь жалуется на setInterval
+    ssr: true, // раньше работало при true теперь жалуется на setInterval
 
     // Target: https://go.nuxtjs.dev/config-target
-   target: "server",
+    target: "server",
 
-   nitro: {
-       prerender: {
-           routes: ['/heroes', '/rules', '/servers', '/team', '/top', '/']
-       },
-       routes: {
-           '/': { cors: true },
-           '/*': { prerender: true }
-       }
-   },
+    nitro: {
+        prerender: {
+            routes: ['/heroes', '/rules', '/servers', '/team', '/top', '/']
+        },
+        routes: {
+            '/': { cors: true },
+            '/*': { prerender: true }
+        }
+    },
 
     devtools: { enabled: true },
 
@@ -54,13 +54,14 @@ export default({
             },
         }
     },
-    // security: {
-    //     headers: {
-    //         contentSecurityPolicy: false,
-    //         crossOriginOpenerPolicy: false,
-    //         crossOriginEmbedderPolicy: false,
-    //         },
-    //     hidePoweredBy: true,
-    // },
+    security: {
+        headers: {
+            contentSecurityPolicy: {
+                'img-src': ["'self'", 'data:', "https://avatars.steamstatic.com", "https://static-cdn.jtvnw.net"]
+            }
+            //crossOriginOpenerPolicy: false,
+            //crossOriginEmbedderPolicy: false,
+        },
+        hidePoweredBy: true,
+    },
 })
-

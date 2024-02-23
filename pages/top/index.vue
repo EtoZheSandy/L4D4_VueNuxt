@@ -1,5 +1,5 @@
 <script>
-const config = useRuntimeConfig()
+
 export default {
   setup() {
     useSeoMeta({
@@ -12,6 +12,7 @@ export default {
   },
   data() {
     return {
+      config: useRuntimeConfig(),
       start: 0,          // Начальная запись
       limit: 15,         // Количество записей в одной порции
       items: [], // Здесь будут храниться полученные данные
@@ -39,7 +40,7 @@ export default {
   methods: {
     async getTopPlayers() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/top_users/${this.start}/${this.limit}`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/top_users/${this.start}/${this.limit}`);
         if (response.ok) {
           const data = await response.json();
           this.items = [...this.items, ...data];
@@ -139,7 +140,7 @@ export default {
       if (this.nickname.toLowerCase() === 'admin') {
         // Если введенное значение - "admin", выполните запрос к другому API
         try {
-          const response = await fetch(`${config.public.apiBase}/v1/top_admins`);
+          const response = await fetch(`${this.config.public.apiBase}/v1/top_admins`);
           if (response.ok) {
             this.items = await response.json()
             this.hideRankColumn = true;
@@ -185,7 +186,7 @@ export default {
     },
     async fetchPlayerSteam(steam_player) {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/get_steam/${steam_player}`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/get_steam/${steam_player}`);
         if (response.ok) {
           const userData = await response.json();
           console.log(userData.avatarfull); // Выведем данные в консоль

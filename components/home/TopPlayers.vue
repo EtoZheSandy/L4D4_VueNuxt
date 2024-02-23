@@ -1,16 +1,16 @@
 <script>
-const config = useRuntimeConfig()
 
 export default {
   data() {
     return {
+      config : useRuntimeConfig(),
       topPlayer: [],
     };
   },
   methods: {
     async getTopPlayers() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/online_players`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/online_players`);
         if (response.ok) {
           this.topPlayer = []
           const data = await response.json();
@@ -39,7 +39,7 @@ export default {
       return name;
     }
   },
-  created() {
+  mounted() {
     this.getTopPlayers();
     this.autoRefreshInterval = setInterval(() => {
       this.getTopPlayers();

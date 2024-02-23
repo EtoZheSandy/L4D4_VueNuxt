@@ -8,13 +8,13 @@
 <!--Не ешь моего друга"-->
 
 <script>
-const config = useRuntimeConfig()
 export default {
   props: {
     steamid: String // Ожидаем steamid как prop
   },
   data() {
     return {
+      config : useRuntimeConfig(),
       achievement: [],
       error: null,
     };
@@ -32,7 +32,7 @@ export default {
   methods: {
     async fetchPlayerAchievement() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/achievement/${this.steamid}`);
+        const response = await fetch(`${this.config.public.apiBase}/api/v1/achievement/${this.steamid}`);
         if (response.ok) {
           const data = await response.json();
           if (data.length === 0) {

@@ -13,10 +13,10 @@
 </template>
 
 <script>
-const config = useRuntimeConfig()
 export default {
   data() {
     return {
+      config : useRuntimeConfig(),
       Admins: [],
       steamData: {},
     };
@@ -24,7 +24,7 @@ export default {
   methods: {
     async getAdminAPI() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/admins_players`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/admins_players`);
         if (response.ok) {
           this.Admins = await response.json();
           this.Admins.forEach(player => {
@@ -40,7 +40,7 @@ export default {
     async fetchPlayerSteam(steamid) {
       if (steamid) { // Проверяем, что steamid существует и не является undefined
         try {
-          const response = await fetch(`${config.public.apiBase}/v1/get_steam/${steamid}`);
+          const response = await fetch(`${this.config.public.apiBase}/v1/get_steam/${steamid}`);
           if (response.ok) {
             this.steamData[steamid] = await response.json();
           } else {

@@ -1,5 +1,4 @@
 <script>
-const config = useRuntimeConfig()
 import { findChapterById } from '~/components/funHelper/CampaignHelper.js';
 export default {
   setup() {
@@ -13,6 +12,7 @@ export default {
   },
   data() {
     return {
+      config : useRuntimeConfig(),
       showPlayersList: false, // Начальное состояние для отображения/скрытия списка
       serverData: null, // Здесь будут храниться данные сервера после запроса
       serverStates: new Map(),
@@ -39,6 +39,9 @@ export default {
     },
   },
   methods: {
+    copyToClipboard(text){
+      navigator.clipboard.writeText(text);
+    },
     findChapterById, // Добавляем функцию в методы компонента
     togglePlayersList(serverId) {
       // Получаем текущее состояние для конкретного сервера
@@ -80,7 +83,10 @@ export default {
     },
     async fetchData() {
       try {
-        const response = await fetch(`${config.public.apiBase}/v1/server/0`);
+        const response = await fetch(`${this.config.public.apiBase}/v1/server/0`, 
+        {
+          cache: 'force-cache'
+        });
         if (response.ok) {
           const data = await response.json();
 
@@ -131,7 +137,7 @@ export default {
       return nameArray
     },
   },
-  created() {
+  mounted() {
     this.fetchData();
     this.autoRefreshInterval = setInterval(() => {
       this.fetchData();
@@ -146,113 +152,105 @@ export default {
 
 <template>
   <div>
-    <!-- Общая загруженность -->
-    <div class="w-full max-w-screen-xl mx-auto mt-10 p-4 bg-white shadow-lg rounded-lg">
-      <!-- Полоса прогресса -->
-      <div class="relative pt-1 w-full">
-        <div class="flex h-7 mb-2 overflow-hidden text-xs bg-gray-300 rounded">
-          <div
-              :style="'width:' + Math.max((totalPlayers / totalMaxPlayers) * 100, 10) + '%'"
-              :class="{
-                'bg-green-400': totalPlayers <= 30,
-                'bg-yellow-400': totalPlayers > 30 && totalPlayers <= 55,
-                'bg-red-400': totalPlayers > 55
-               }"
-              class="flex flex-col text-center whitespace-nowrap text-white justify-center relative">
-            <!-- Текст с количеством игроков -->
-            <span class="absolute inset-0 flex items-center justify-center text-xl text-black">
-            {{ totalPlayers }}/{{ totalMaxPlayers }}
-          </span>
+    <!-- Grid с серверной загруженностью -->
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5
+                gap-4 py-8 sm:py-8 md:py-16 px-2 sm:px-2 md:px-8 my-0 sm:my-0 md:my-4 mx-0 sm:mx-0 md:mx-10 rounded-2xl backdrop-blur-md select-none"
+      id="grid-container">
+      <!-- По серверная загруженность -->
+      <!-- Placeholder -->
+      <div v-if="serverData == null" v-for="index in 14" :key="index">
+        <div class="relative rounded-xl overflow-hidden bg-gray-800 bg-opacity-80">
+          <div class="shimmer w-full object-cover h-32 sm:h-32 md:h-24 overflow-hidden relative rounded-t-xl cursor-default shadow-md">
           </div>
         </div>
       </div>
-    </div>
-
-
-    <!-- Grid с серверной загруженностью -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-2 md:mx-4 lg:mx-10 mt-4">
-      <!-- По серверная загруженность -->
-      <div v-for="(server, index) in serverData" :key="index" class="bg-white p-2 shadow-lg rounded-lg">
-        <!-- Контейнер для изображения и текста -->
-        <div class="flex flex-col md:flex-row">
+      <!-- Original-->
+      <div v-if="serverData != null" v-for="(server, index) in serverData" :key="index">
+        <!-- Контейнер сервера -->
+        <div class="relative bg-black bg-opacity-50 rounded-xl overflow-hidden">
           <!-- Картинка карты -->
-          <div class="w-5/5 sm:w-7/12 md:mr-1 2xl:mr-4 md:overflow-hidden"> <!-- Увеличили ширину карточки на больших экранах -->
+          <div class="w-full object-cover h-32 sm:h-32 md:h-24 overflow-hidden relative rounded-t-xl cursor-default shadow-md" id="server-container">
             <img
+                @click="togglePlayersList(server.serverId)"
                 :src="getServerMapImage(server.map)"
                 alt="Карта"
                 @error="handleImageError(server)"
-                class="w-full object-cover h-52 rounded-lg border-black border-2"
+                class="object-cover overflow-hidden w-full h-full brightness-75 md:brightness-50 duration-200" id="server-image"
             />
-<!--            <p class="text-center mt-1 text-gray-600">{{ findChapterById(server.map).chapterName }}</p>-->
-            <p class="text-center mt-2 text-gray-600">Карта: <span class="text-green-900">{{ server.map }} | {{ findChapterById(server.map).chapterName }}</span></p>
-          </div>
-
-          <!-- Информация о сервере (справа от картинки) -->
-          <div class="w-full 2xl:w-1/3 md:w-3/5 flex flex-col"> <!-- Увеличили ширину карточки на больших экранах -->
-            <h2 class="text-lg md:text-2xl font-semibold font_server py-2 text-center">
-              {{ getServerName(server.name)[0] }}
-              <br>
-              {{ getServerName(server.name)[1] }}
-              <span v-if="isServerOffline(server.timestamp)" class="text-red-500 ml-2 font_l4d4">Offline</span>
-            </h2>
-
-            <!-- Полоса прогресса для игроков -->
-            <div class="relative pt-1">
-              <!-- Задний фон для полосы-->
-              <div class="bg-gray-300 h-7 flex inset-0 text-center whitespace-nowrap text-white rounded overflow-hidden">
-                <div
-                  :style="'width:' + Math.max((server.players.length / server.maxplayers) * 100, 0) + '%'"
+            <!-- Контент картинки -->
+            <div class="m-3">
+              <!-- Название сервера-->
+              <h2 class="pointer-events-none text-lg font-semibold font_server absolute top-2 text-white select-text">
+                {{ getServerName(server.name)[0] }} {{ getServerName(server.name)[1] }}
+                <span v-if="isServerOffline(server.timestamp)" class="text-red-500 font_l4d4">Offline</span>
+              </h2>
+              <!-- Карта и онлайн -->
+              <div class="pointer-events-none text-gray-400 absolute bottom-2 font-semibold justify-between flex space-x-2 text-md">
+                <!-- Прогресс игроков-->
+                <div class="bg-gray-500 rounded-sm overflow-hidden w-2 full-height rotate-180">   
+                  <div
+                  :style="'height:' + Math.max((server.players.length / server.maxplayers) * 100, 0) + '%'"
                   :class="{
                     'bg-green-400': server.players.length <= 4,
                     'bg-yellow-400': server.players.length > 4 && server.players.length <= 6,
                     'bg-red-400': server.players.length > 6
-                  }"
-                  class="h-7 flex flex-col text-center whitespace-nowrap text-white justify-center relative">
+                  }"></div> 
                 </div>
-                <!-- Текст с количеством игроков -->
-                <span class="absolute inset-0 flex items-center justify-center text-lg text-black font-bold">
-                    {{ server.players.length }}/{{ server.maxplayers }}
-                </span>
+                <!-- Количество игроков-->
+                <div>{{server.players.length}}/{{server.maxplayers}}</div>
+                <!-- Карта -->
+                <div class="select-text">{{ server.map }}</div>
+              </div>
+              <!-- Кнопки -->
+              <div class="absolute bottom-0 right-0 text-white w-12 h-full flex flex-col justify-around">
+                <!-- Copy -->
+                <a
+                  @click="copyToClipboard(server.connect)"
+                  class="hover:bg-white hover:bg-opacity-20 h-[50%] p-3 rounded-bl-xl duration-100 active:bg-opacity-40 btn-with-icon flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                    <path class="icon-in-btn" fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                  </svg>
+                </a>
+                <!-- Play -->
+                <a
+                  :href="'steam://connect/' + server.connect" target="_blank"
+                  class="hover:bg-white hover:bg-opacity-20 h-[50%] p-3 rounded-tl-xl duration-100 active:bg-opacity-40 flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" :class="{'fill-white':server.players.length!=server.maxplayers,'fill-gray-500':server.players.length==server.maxplayers}" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
+                  </svg>
+                </a>
               </div>
             </div>
-
-            <!-- Кнопка "Показать игроков" -->
-            <button class="text-blue-500 cursor-pointer text-lg mt-1 py-1" @click="togglePlayersList(server.serverId)">
-              Показать игроков
-            </button>
-
-            <!-- Таблица для списка игроков -->
-            <table v-if="serverStates.get(String(server.serverId))" class="text-sm mt-2 w-full">
-              <thead>
-              <tr>
-                <th>Имя игрока</th>
-                <th>Время</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="(player, playerIndex) in server.players" :key="playerIndex" class="player-row">
-                <td class="text-black text-lg">{{ player.name }}</td>
-                <td class="text-xs">{{ formattedTime(player.raw.time) }}</td>
-              </tr>
-              </tbody>
-            </table>
-
-            <!-- Адрес сервера и кнопка "Подключиться" -->
-            <div class="mt-2 text-g">
-              <p class="py-1 font-sans">IP: {{ server.connect }}</p>
-              <a
-                  :href="'steam://connect/' + server.connect"
-                  target="_blank"
-                  :class="{
-                'inline-block mt-3 text-md px-8 py-3 bg-green-500 text-gray-100 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out': server.players.length <= 3,
-                'inline-block mt-3 text-md px-8 py-3 bg-yellow-500 text-gray-100 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out': server.players.length > 3 && server.players.length <= 6,
-                'inline-block mt-3 text-md px-8 py-3 bg-red-500 text-gray-100 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out': server.players.length > 6,
-                'inline-block mt-3 text-md px-8 py-3 bg-zinc-800 text-gray-500 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out': server.players.length === 8,
-              }"
-              >
-                🔗Подключиться
-              </a>
-            </div>
+          </div>
+          <!-- Список игроков -->
+          <div v-if="server.players.length != 0">
+            <!-- Таблица игроков -->
+            <Transition name="table-show">
+              <div class="flex text-white px-2 py-2" v-show="serverStates.get(String(server.serverId))">
+                <table class="text-lg sm:text-lg md:text-sm mt-2 w-full">
+                  <tbody>
+                    <tr v-for="(player, playerIndex) in server.players" :key="playerIndex" class="player-row">
+                      <td>{{!(player.raw.time === undefined) ? player.name : 'Загружается...'  }}</td>
+                      <td>{{!(player.raw.time === undefined) ? formattedTime(player.raw.time) : '0 сек' }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </Transition>
+            <!-- Кнопка для вызова списка игроков -->
+            <a @click="togglePlayersList(server.serverId)"
+              class="bg-black bg-opacity-40 bottom-0 flex justify-center hover:bg-gray-700 h-4">
+              <svg v-if="!serverStates.get(String(server.serverId))"
+                xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
+              </svg>
+              <svg 
+                v-if="serverStates.get(String(server.serverId))"
+                xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-chevron-compact-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894z"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -264,22 +262,55 @@ export default {
 
 
 <style>
-.player-row {
-  position: relative; /* Сделать позицию относительной, чтобы можно было добавить псевдоэлемент */
+.table-show-enter-active,
+.table-show-leave-active {
+  transition: all 0.2s;
+  max-height: 1000px;
 }
-
-.player-row::after {
-  content: ''; /* Псевдоэлемент для создания полоски */
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px; /* Высота полоски */
-  background-color: #096600; /* Цвет полоски */
+.table-show-enter-from,
+.table-show-leave-to{
+  opacity: 0;
+  max-height: 0px;
 }
-
 
 .font_server {
   font-family: 'din';
+}
+
+#server-container:hover #server-image
+{
+  filter:brightness(100%);
+  transition-property: filter;
+}
+#grid-container{
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.btn-with-icon:active .icon-in-btn{
+  fill-opacity: 100%;
+  transition-duration: 10ms;
+  transition-delay: 0ms;
+}
+.icon-in-btn{
+  fill-opacity: 0;
+  transition-delay: 2000ms;
+  transition-duration: 300ms;
+}
+.shimmer{
+    background: linear-gradient(100deg,
+    rgba(255,255,255,0) 20%,
+    rgba(255,255,255,0.5) 50%,
+    rgba(255,255,255,0) 80%);
+ 
+    animation: shimmer 2s infinite linear;
+}
+ 
+@keyframes shimmer{
+    from {
+        transform: translateX(-200%);
+    }
+    to{
+        transform: translateX(200%);
+    }
 }
 </style>
