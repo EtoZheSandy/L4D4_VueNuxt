@@ -23,7 +23,7 @@ export default {
   methods: {
     async fetchPlayerSeason() {
       try {
-        const response = await fetch(`${this.config.public.apiBase}/v1/oldseason/${this.steamid}`);
+        const response = await fetch(`${this.config.public.apiBase}/api/v1/oldseason/${this.steamid}`);
         if (response.ok) {
           const data = await response.json();
 

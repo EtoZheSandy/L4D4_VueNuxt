@@ -28,17 +28,17 @@ export default({
     ssr: true, // раньше работало при true теперь жалуется на setInterval
 
     // Target: https://go.nuxtjs.dev/config-target
-   target: "server",
+    target: "server",
 
-   nitro: {
-       prerender: {
-           routes: ['/heroes', '/rules', '/servers', '/team', '/top', '/']
-       },
-       routes: {
-           '/': { cors: true },
-           '/*': { prerender: true }
-       }
-   },
+    nitro: {
+        prerender: {
+            routes: ['/heroes', '/rules', '/servers', '/team', '/top', '/']
+        },
+        routes: {
+            '/': { cors: true },
+            '/*': { prerender: true }
+        }
+    },
 
     devtools: { enabled: true },
 
@@ -61,8 +61,7 @@ export default({
             }
             //crossOriginOpenerPolicy: false,
             //crossOriginEmbedderPolicy: false,
-            },
+        },
         hidePoweredBy: true,
     },
 })
-
