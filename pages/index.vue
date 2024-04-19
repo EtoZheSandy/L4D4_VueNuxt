@@ -10,10 +10,10 @@ export default {
   setup() {
     useSeoMeta({
       title: 'Убежище L4D4',
-      ogTitle: 'Сервер L4D2: Убежище Endurance',
-      description: 'Самое время сыграть на лучших сервере Left 4 Dead 2 - Endurance это уникальные перки со своей системой perkmod`а он же перкмод, ранги и много веселья ждут вас на...',
-      ogDescription: 'Присоединяйтесь к увлекательной игре на сервере Left 4 Dead 2 - Убежище Endurance. Уникальные перки со своей системой perkmod`а, ранги и много веселья ждут вас на...',
-      ogImage: 'https://l4d4.com/images/EnduranceLogo.png',
+      ogTitle: 'Сервер L4D2: Убежище Guardians',
+      description: 'Самое время сыграть на лучших сервере Left 4 Dead 2 - Guardians это уникальные перки со своей системой perkmod`а он же перкмод, ранги и много веселья ждут вас на...',
+      ogDescription: 'Присоединяйтесь к увлекательной игре на сервере Left 4 Dead 2 - Убежище Guardians. Уникальные перки со своей системой perkmod`а, ранги и много веселья ждут вас на...',
+      ogImage: 'https://l4d2perks.ru/images/new/Guardians_Logo.png',
     })
   },
   components: {

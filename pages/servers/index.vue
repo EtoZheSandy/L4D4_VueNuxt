@@ -4,10 +4,10 @@ export default {
   setup() {
     useSeoMeta({
       title: 'Сервера L4D4',
-      ogTitle: 'Лучшие сервера с перками в Left 4 Dead 2: Убежище Endurance',
-      description: 'Присоединяйтесь к лучшим серверам Left 4 Dead 2 - Убежище Endurance с уникальными перками, рангами и бесплатными привилегиями',
-      ogDescription: 'Играй на лучших серверах Left 4 Dead 2 - Убежище Endurance с уникальными перками, рангами, картами и морем веселья!',
-      ogImage: 'https://l4d4.com/maps/c8m1_apartment.jpg',
+      ogTitle: 'Лучшие сервера с перками в Left 4 Dead 2: Убежище Guardians',
+      description: 'Присоединяйтесь к лучшим серверам Left 4 Dead 2 - Убежище Guardians с уникальными перками, рангами и бесплатными привилегиями',
+      ogDescription: 'Играй на лучших серверах Left 4 Dead 2 - Убежище Guardians с уникальными перками, рангами, картами и морем веселья!',
+      ogImage: 'https://l4d2perks.ru/maps/c8m1_apartment.jpg',
     })
   },
   data() {

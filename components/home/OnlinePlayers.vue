@@ -36,7 +36,7 @@ export default {
     <div class="pl-2 px-2 mb-1 flex items-center">
       <h3 class="text-lg font-bold mx-auto">СТАТИСТИКА </h3>
       <div class="flex items-center">
-        <a href="https://steamcommunity.com/groups/Endurance_l4d2" target="_blank" class="whitespace-nowrap">
+        <a href="https://steamcommunity.com/groups/guardiansperkmod" target="_blank" class="whitespace-nowrap">
           <!--          <BootstrapIconSteam class="w-5 h-5" />-->
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16">
             <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>

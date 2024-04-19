@@ -3,10 +3,10 @@ export default {
   data() {
     return {
       slideIndex: 1,
-      link1: 'https://discord.com/invite/tdrRDat',
+      link1: 'https://discord.gg/RNVGsk6AFe',
       link2: 'https://vk.com/endurancel4d2',
       link3: 'https://t.me/EnduranceSupport_bot',
-      link4: 'https://boosty.to/endurancel4d2',
+      link4: 'https://boosty.to/guardiansperkmod',
     };
   },
   methods: {
@@ -17,7 +17,7 @@ export default {
       this.showSlides(this.slideIndex + n);
     },
     showSlides(n) {
-      const numSlides = 4;
+      const numSlides = 2;
 
       if (n > numSlides) {
         this.slideIndex = 1;
@@ -45,36 +45,19 @@ export default {
           @click="openLink(link1)"
           :class="{ 'hidden': slideIndex !== 1 }"
       >
-        <img src="/images/ds.png" class="w-full cursor-pointer rounded" title="Тыкни в меня" loading="lazy" />
+        <img src="/images/new/ds_slide.png" class="w-full cursor-pointer rounded" title="Тыкни в меня" loading="lazy" />
       </div>
-
-      <div
-          class="mySlides fade"
-          @click="openLink(link2)"
-          :class="{ 'hidden': slideIndex !== 2 }"
-      >
-        <img src="/images/vk.png" class="w-full cursor-pointer rounded" title="Тыкни в меня" loading="lazy" />
-      </div>
-
-      <div
-          class="mySlides fade"
-          @click="openLink(link3)"
-          :class="{ 'hidden': slideIndex !== 3 }"
-      >
-        <img src="/images/tg.png" class="w-full cursor-pointer rounded" title="Тыкни в меня" loading="lazy" />
-      </div>
-
       <div
           class="mySlides fade"
           @click="openLink(link4)"
-          :class="{ 'hidden': slideIndex !== 4 }"
+          :class="{ 'hidden': slideIndex !== 2 }"
       >
-        <img src="/images/boosty.png" class="w-full cursor-pointer rounded" title="Тыкни в меня" loading="lazy" />
+        <img src="/images/new/boosty_slide.png" class="w-full cursor-pointer rounded" title="Тыкни в меня" loading="lazy" />
       </div>
 
       <p class="prev absolute top-1/2 left-0 transform -translate-y-1/2 w-auto p-2 text-white font-bold text-2xl transition duration-600 ease-in-out bg-black bg-opacity-40 rounded-r-2xl" @click="plusSlides(-1)">
 <!--        <BootstrapIconCaretLeft />-->
-      
+        <
       </p>
       <p class="next absolute top-1/2 right-0 transform -translate-y-1/2 w-auto p-2 text-white font-bold text-2xl transition duration-600 ease-in-out bg-black bg-opacity-40 rounded-l-2xl" @click="plusSlides(1)">
 <!--        <BootstrapIconCaretRight />-->

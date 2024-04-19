@@ -3,10 +3,10 @@ export default {
   setup () {
     useSeoMeta({
       title: 'Правила',
-      ogTitle: 'Правила Endurance',
-      description: 'Правила проекта Endurance',
-      ogDescription: 'Правила проекта Endurance',
-      ogImage: 'https://l4d4.com/images/rules.png',
+      ogTitle: 'Правила Guardians',
+      description: 'Правила проекта Guardians',
+      ogDescription: 'Правила проекта Guardians',
+      ogImage: 'https://l4d2perks.ru/images/rules.png',
     })
   },
   data() {
@@ -249,9 +249,6 @@ export default {
   <div class="max-w-screen-xl mx-auto rounded mt-10 p-4 bg-gray-100">
     <!-- Заголовок с огромным шрифтом -->
     <h1 class="text-4xl lg:text-6xl font-bold mb-2 lg:mb-4">{{ languageTexts[currentLanguage].mainText }}</h1>
-
-    <!-- Подзаголовок с меньшим шрифтом -->
-    <h2 class="text-base lg:text-xl mb-2 lg:mb-4">{{ languageTexts[currentLanguage].subText }} <a href="https://t.me/EnduranceSupport_bot" class="text-blue-500 hover:underline">Telegram Bot</a></h2>
 
     <!-- Кнопки переключения языка -->
     <div class="flex space-x-2 lg:space-x-4 mb-2 lg:mb-4">

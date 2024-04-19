@@ -3,10 +3,10 @@ export default {
   setup () {
     useSeoMeta({
       title: 'Пантеон',
-      ogTitle: 'Пантеон Endurance',
-      description: 'Пантеон проекта Endurance, только лучшие игроки с топовыми привилегиями в Left 4 Dead 2',
-      ogDescription: 'Пантеон проекта Endurance, только лучшие игроки с топовыми привилегиями в Left 4 Dead 2',
-      ogImage: 'https://l4d4.com/images/panteon.png',
+      ogTitle: 'Пантеон Guardians',
+      description: 'Пантеон проекта Guardians, только лучшие игроки с топовыми привилегиями в Left 4 Dead 2',
+      ogDescription: 'Пантеон проекта Guardians, только лучшие игроки с топовыми привилегиями в Left 4 Dead 2',
+      ogImage: 'https://l4d2perks.ru/images/panteon.png',
     })
   },
   data() {
@@ -97,7 +97,7 @@ export default {
   <div class="max-w-screen-xl mx-auto rounded mt-10 p-4 sm:p-8 gradient-background">
     <h1 class="text-center text-3xl sm:text-4xl font-medium">Пантеон славы 🏛️</h1>
     <p class="text-xl mt-2 sm:mt-4 text-center">Спасибо за поддержку нашего проекта ❤️</p>
-    <p class="text-xl text-center">Присоединяйся к нашей тусовке на <a href="https://boosty.to/endurancel4d2" class="decoration-purple-600 underline">Boosty!</a></p>
+    <p class="text-xl text-center">Присоединяйся к нашей тусовке на <a href="https://boosty.to/guardiansperkmod" class="decoration-purple-600 underline">Boosty!</a></p>
     <br>
 <!--    <p class="border-b border-yellow-400"> </p>-->
     <div class="flex flex-wrap justify-center sm:space-x-4 ">

@@ -60,8 +60,8 @@ export default {
           useSeoMeta({
             title: this.steamData.personaname,
             ogTitle: 'Профиль ' + this.steamData.personaname,
-            description: 'Профиль ' + this.steamData.personaname + ', в рейтинге Endurance',
-            ogDescription: 'Профиль ' + this.steamData.personaname + ', в рейтинге Endurance',
+            description: 'Профиль ' + this.steamData.personaname + ', в рейтинге Guardians',
+            ogDescription: 'Профиль ' + this.steamData.personaname + ', в рейтинге Guardians',
             ogImage: this.steamData.avatarfull,
           });
         } else {

@@ -4,9 +4,9 @@ export default {
   setup() {
     useSeoMeta({
       title: 'Рейтинг L4D4',
-      ogTitle: 'Рейтинг игроков Endurance, Left 4 Dead 2',
-      description: 'Рейтинг игроков проекта Endurance, Left 4 Dead 2',
-      ogDescription: 'Рейтинг игроков проекта Endurance, Left 4 Dead 2',
+      ogTitle: 'Рейтинг игроков Guardians, Left 4 Dead 2',
+      description: 'Рейтинг игроков проекта Guardians, Left 4 Dead 2',
+      ogDescription: 'Рейтинг игроков проекта Guardians, Left 4 Dead 2',
       // ogImage: '@/images/team.png',
     })
   },
@@ -157,9 +157,9 @@ export default {
         }
       }
       else {
-        // В противном случае выполните запрос к API2.l4d4.com/v1/nickname
+        // В противном случае выполните запрос к API2.l4d2perks.ru/v1/nickname
         try {
-          const response = await fetch(`https://api2.l4d4.com/v1/nickname/${encodeURIComponent(this.nickname)}`);
+          const response = await fetch(`https://api2.l4d2perks.ru/v1/nickname/${encodeURIComponent(this.nickname)}`);
           if (response.ok) {
             this.items = await response.json();
             this.hideRankColumn = true;
@@ -241,7 +241,7 @@ export default {
     </div>
 
     <div v-if="offerprofile" class="my-2 p-2 bg-blue-100 border border-blue-500 rounded text-center">
-      <p>Возможно, вы ищите профиль игрока <a class="font-bold underline text-blue-500" :href="'https://l4d4.com/player/' + nickname" target="_blank">{{ nickname }}</a></p>
+      <p>Возможно, вы ищите профиль игрока <a class="font-bold underline text-blue-500" :href="'https://l4d2perks.ru/player/' + nickname" target="_blank">{{ nickname }}</a></p>
     </div>
 
     <table class="min-w-full sm:my-4 lg:my-4"><!-- Зададим ширину таблицы -->

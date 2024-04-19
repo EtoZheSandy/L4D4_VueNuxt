@@ -3,9 +3,9 @@ export default {
   setup () {
     useSeoMeta({
       title: 'Турнир',
-      ogTitle: 'Турнир Endurance',
-      description: 'Зимний турнир Endurance, самые интересные матчи в Left 4 Dead 2',
-      ogDescription: 'Зимний турнир Endurance, самые интересные матчи в Left 4 Dead 2',
+      ogTitle: 'Турнир Guardians',
+      description: 'Зимний турнир Guardians, самые интересные матчи в Left 4 Dead 2',
+      ogDescription: 'Зимний турнир Guardians, самые интересные матчи в Left 4 Dead 2',
     })
   },
   data() {
