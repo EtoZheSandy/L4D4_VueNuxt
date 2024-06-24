@@ -4,7 +4,7 @@
 ## Возможности данного проекта
 
 #
-<img src='./ImagesPagePreview/servers.jpg' width='60%'>
+<img src='./ImagesPagePreview/servers_new.png' width='60%'>
 
 - Автоматическое обновление информации о текущем онлайне серверов с подробными описаниями карт и общей загруженностью.
 
